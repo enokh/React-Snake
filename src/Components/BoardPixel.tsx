@@ -9,9 +9,15 @@ interface Props{
 const BoardPixel: React.FC<Props> = ({pixel}) => {
     //console.log(pixel)
 
-    if(pixel !==0){
+    if(pixel ===1){
         return (
             <span  className = {"snake"}>
+                {/*pixel*/} 
+            </span >
+        )
+    }else if (pixel ===2){
+        return (
+            <span  className = {"food"}>
                 {/*pixel*/} 
             </span >
         )

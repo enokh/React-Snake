@@ -22,26 +22,27 @@ const App: React.FC<{}> = () => {
   const [board, setBoard] = useState(boardIntial)
 
   // create snake in array 
-  const snake: number[][] = [[0, 5], [0, 4], [0, 3], [0, 2], [0, 1], [0, 0]]
+  let snake: number[][] = [[0, 5], [0, 4], [0, 3], [0, 2], [0, 1], [0, 0]]
 
   //game status
-  let [status, setStatus] = useState("The game is running...");
+  let [status, setStatus] = useState("Game is running...");
+  //to keep track of food
+  let foodExists = false;
 
   useEffect(() => {
-    const update = setInterval(game, 100)
+    const update = setInterval(game, 75)
     return () => {
       clearInterval(update);
     }
-  }, [] );
+  }, []);
 
-  
+
   const moveSnake = () => {
     //console.log(direction);
     let snakeClone: number[][] = []
     snake.forEach(cord => {
       snakeClone.push(cord.slice())
     })
-
 
     if (direction === 1) {
       if (snake[0][1] === 15) {
@@ -81,21 +82,35 @@ const App: React.FC<{}> = () => {
       }
     }
     wipe();
-    updateBoard(snake);
+    updateBoard(snake, foodExists);
   }
 
   const wipe = () => {
     for (var x = 0; x < 16; x++) {
       for (var y = 0; y < 16; y++) {
-        board[x][y].value = 0
+        if (board[x][y].value != 2) {
+          board[x][y].value = 0
+        }
       }
     }
   }
-  
+
   //updates the new possition of the snake on the grid
-  const updateBoard = (s: number[][]) => {
+  const updateBoard = (s: number[][], f: boolean) => {
+    if (!f) {
+      console.log("new Food")
+      let r = Math.floor(Math.random() * 16);
+      let c = Math.floor(Math.random() * 16);
+      board[r][c].value = 2;
+      foodExists = true;
+    }
     setBoard(board => {
       for (let i = 0; i < s.length; i++) {
+        if (board[s[i][0]][s[i][1]].value == 2) {
+          console.log("eaten")
+          foodExists = false;
+          snake = [...snake, [0, 0]]
+        }
         board[s[i][0]][s[i][1]].value = 1;
       }
       return [...board]
@@ -140,15 +155,25 @@ const App: React.FC<{}> = () => {
   }
 
   //generate food
-  const generateFood = ()=>{
-    
+  const generateFood = () => {
+    if (!foodExists) {
+      console.log("new Food")
+      let r = Math.floor(Math.random() * 16);
+      let c = Math.floor(Math.random() * 16);
+      board[r][c].value = 2;
+      setBoard(board)
+      foodExists = true;
+    }
+  }
+  const checkEat = () => {
+
   }
 
-  
-  const game = ()=>{
-    if (checkLoss()){
-      setStatus("Game Over you lost!!!")
-    }else{
+
+  const game = () => {
+    if (checkLoss()) {
+      setStatus("Game Over`!!!")
+    } else {
       moveSnake();
     }
   }
@@ -159,8 +184,19 @@ const App: React.FC<{}> = () => {
       <div className="board">
         <Board board={board} />
       </div>
-      <br/>
-      {status}
+      <div className="status">
+        <br />
+        {status}
+        <br />
+      </div>
+      <button className="resButton" onClick={() => { window.location.reload(); }}>Restart</button>
+      <div className='inst1'>
+        Instructions: 
+      </div>
+      <p className='inst2'>
+        Right Arrow Key to turn right.<br />
+        Left Arrow Key to turn left.
+      </p>
     </div>
   );
 }

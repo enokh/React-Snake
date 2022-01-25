@@ -1,24 +1,66 @@
-.pixel{
-    margin: none;
-    background-color: rgb(212, 209, 16);
-    width: 12px;
-    height: 12px;
+h1 {
 }
 
-.snake{
-    margin: none;
-    background-color: rgb(0, 0, 0);
-    width: 12px;
-    height: 12px;
+.pixel {
+  margin: none;
+  background-color: white;
+  width: 12px;
+  height: 12px;
+}
+
+.food {
+  margin: none;
+  background-color: #ff4b44;
+  width: 12px;
+  height: 12px;
+}
+
+.snake {
+  margin: none;
+  background-color: rgb(0, 0, 0);
+  width: 12px;
+  height: 12px;
 }
 
 .board {
-    display: grid;
-    grid-template-columns: repeat(16, 12px);
-    grid-row-gap: 1px;
-    grid-column-gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(16, 12px);
+  grid-row-gap: 1px;
+  grid-column-gap: 1px;
 }
 
-body{
-    color: black;
+body {
+  color: black;
+  background-color: #d1d1d1;
+  position: absolute;
+  padding-left: 20px;
+  padding-top: 0px;
 }
+
+.resButton {
+    margin-left: 55px;
+  background-color: #ff4b44;
+  border: none;
+  color: white;
+  padding: 12px 26px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+}
+.status {
+  font-family: "Courier New", Courier, monospace;
+  margin-bottom: 20px;
+}
+
+.inst1 {
+    margin-top: 10px;
+    font-family: "Courier New", Courier, monospace;
+    margin-bottom: 7px;
+  }
+
+  .inst2 {
+    font-family:'Times New Roman', Times, serif;
+    margin-bottom: 7px;
+    color: rgb(39, 39, 39);
+  }
